@@ -1,0 +1,9 @@
+{
+  "name": "Signal Ledger",
+  "short_name": "Signal Ledger",
+  "description": "A local-first due diligence workspace.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf5f0",
+  "theme_color": "#fbf5f0"
+}
