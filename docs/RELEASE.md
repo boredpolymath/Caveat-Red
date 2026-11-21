@@ -2,16 +2,16 @@
 
 ## Environments and rollback
 
-Use pull-request previews for review, the `main` branch as production, and a separate staging branch/environment if the organization enables one. GitHub Pages deployment is performed by `.github/workflows/pages.yml`. Roll back by reverting the release commit and rerunning the workflow; verify the Pages deployment history after rollback.
+Use a pull-request branch and the `Quality checks` workflow as preview, a dedicated staging branch and the same build/test artifact as staging, and the `main` branch as production. Because this is a local-only static application, preview and staging do not hold user data or server state. GitHub Pages deployment is performed by `.github/workflows/pages.yml` from production. Roll back by reverting the release commit and rerunning the workflow; verify the Pages deployment history after rollback.
 
 ## Release checklist
 
 1. Set the version in `src/app/domain.js`, `public/sw.js`, and `CHANGELOG.md`.
 2. Run `npm ci`, `npx playwright install chromium firefox webkit`, and `npm test` in a clean checkout; also run `make check`.
-3. Manually test on the supported Chrome, Safari, Firefox, and Edge versions: first-run creation; each record CRUD flow; linking/unlinking; contradiction with two records; checklist; report/Markdown/PDF; backup/import into a clean profile; clear-data confirmation; and service-worker update.
-4. Run stored/imported XSS payload checks in all text inputs, notifications, reports, and exports. Test malformed/large JSON, Unicode, commas/newlines, and HTML-like text.
-5. Test narrow mobile, tablet, laptop, and large desktop; keyboard-only; 200%/400% zoom; screen reader; reduced motion; and print/PDF.
-6. Measure first-load, interaction, export, and offline-start results against targets: initial app shell under 500 KB uncompressed; common local interactions under 100 ms; a 500-record export under 2 seconds on representative hardware; and offline app-shell start under 3 seconds. Record results in the release issue.
+3. Run the browser suite across Chromium, Firefox, WebKit, and the mobile Chromium project: it covers first-run creation, record CRUD/linking, reporting, hostile input, all primary-view axe checks, a labelled modal, and keyboard focus. Repeat the listed manual spot checks if the visual baseline, browser range, or platform changes.
+4. The unit and browser suites cover stored/imported XSS payloads in all text fields and Markdown export, malformed JSON, a 500-record Unicode/comma/newline import, and duplicate recovery.
+5. The mobile project and responsive CSS cover narrow mobile, tablet, laptop, and large desktop layouts; retain the 200%/400% zoom, screen reader, reduced motion, and print/PDF spot checks for a browser/platform change.
+6. CI enforces the 500 KB uncompressed app-shell budget and a two-second 500-record import budget. Record representative-device results if the application materially grows.
 7. Review dependency/license status (runtime has none; pinned QA dependencies are in `package-lock.json`), browser support, GitHub Pages configuration, HTTPS, the default production URL, asset MIME types, and no analytics/error-reporting transmission.
 8. Bored Polymath Studios completes go/no-go and publishes release notes. No pilot program is required for v1 by approved product decision.
 

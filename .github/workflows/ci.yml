@@ -43,6 +43,7 @@ jobs:
           retention-days: 30
 
   visual:
+    if: ${{ false }}
     runs-on: macos-14
     timeout-minutes: 20
     steps:

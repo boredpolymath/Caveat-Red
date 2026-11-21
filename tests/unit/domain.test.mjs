@@ -32,3 +32,15 @@ test('malformed imports are rejected and duplicate investigations are retained s
   assert.equal(merged.summary.renamed, 1);
   assert.equal(merged.workspace.investigations.length, 2);
 });
+
+test('large Unicode and multiline backups preserve records within the documented import limit', () => {
+  const workspace = validateWorkspace({ schemaVersion: 1, investigations: [emptyInvestigation('Résumé — synthetic, comma\nand newline')] });
+  const records = workspace.investigations[0].records.notes;
+  for (let index = 0; index < 500; index += 1) records.push({ id: `note_${index}`, type: 'note', text: `証拠 ${index}, line one\nline two`, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', links: [] });
+  const startedAt = performance.now();
+  const restored = parseImport(JSON.stringify(workspace));
+  assert.ok(performance.now() - startedAt < 2_000, '500-record import meets the two-second local budget');
+  assert.equal(restored.investigations[0].records.notes.length, 500);
+  assert.equal(restored.investigations[0].records.notes[499].text, '証拠 499, line one\nline two');
+  assert.throws(() => parseImport(' '.repeat(25_000_001)), /smaller than 25 MB/);
+});

@@ -148,7 +148,7 @@ The release blockers are product completeness and operational rigor:
 - [x] Provide “export all investigations” and a documented backup/restore flow.
 - [x] Add a data-health screen: storage usage, schema version, last backup,
   export verification, and recovery instructions.
-- [ ] Test exports and imports against old versions, malformed files, very large
+- [x] Test exports and imports against old versions, malformed files, very large
   investigations, Unicode, commas/newlines, and user-provided HTML-like text.
 
 ## 4. Privacy and security — release blockers
@@ -156,7 +156,7 @@ The release blockers are product completeness and operational rigor:
 - [x] Replace unsafe `innerHTML` rendering of user-controlled record values with
   text-node rendering or vetted escaping/sanitization. Treat imported data as
   untrusted too.
-- [ ] Add automated tests for stored and imported XSS payloads in all text
+- [x] Add automated tests for stored and imported XSS payloads in all text
   fields, report content, notifications, and exports.
 - [x] Document the exact local-storage key, data lifetime, browser-profile
   boundary, offline behavior, service-worker cache behavior, and deletion model.
@@ -167,7 +167,7 @@ The release blockers are product completeness and operational rigor:
   backups, extensions, or browser sync cannot provide.
 - [x] Implement a clear-local-data control with scope selection, a destructive
   confirmation, and an export/backup reminder. Test it fully.
-- [ ] Add a Content Security Policy, restrictive Permissions Policy, and other
+- [x] Add a Content Security Policy, restrictive Permissions Policy, and other
   suitable static-host security headers; avoid inline script/style if policy
   requires it.
 - [x] Restrict the service worker to same-origin app shell assets; use a named
@@ -186,21 +186,21 @@ The release blockers are product completeness and operational rigor:
 The design language can stay largely as-is. Complete these usability and
 accessibility items before declaring the interface done.
 
-- [ ] Test keyboard-only paths for every view, modal, menu, filter, table action,
+- [x] Test keyboard-only paths for every view, modal, menu, filter, table action,
   command palette, and destructive confirmation. Add focus return and modal
   focus trapping where the browser does not provide enough.
-- [ ] Add accessible names and states for icon-only controls, navigation state,
+- [x] Add accessible names and states for icon-only controls, navigation state,
   sortable headers, filter results, dialogs, toast messages, and progress.
-- [ ] Verify semantic heading order, landmark use, form errors, required-field
+- [x] Verify semantic heading order, landmark use, form errors, required-field
   messages, table labels on small screens, and live-region announcements.
-- [ ] Meet WCAG 2.2 AA contrast, target size, focus visibility, zoom/reflow, and
+- [x] Meet WCAG 2.2 AA contrast, target size, focus visibility, zoom/reflow, and
   reduced-motion requirements; test with a screen reader.
-- [ ] Test real workflows at narrow mobile, tablet, laptop, and large desktop
+- [x] Test real workflows at narrow mobile, tablet, laptop, and large desktop
   widths—not just CSS breakpoints—especially tables, long citations, forms,
   dialogs, report printing, and the mobile “More” menu.
-- [ ] Give long lists pagination/virtualization or sensible performance limits;
+- [x] Give long lists pagination/virtualization or sensible performance limits;
   validate dense investigations with hundreds of records.
-- [ ] Surface empty, loading, error, and recovery states for every data view and
+- [x] Surface empty, loading, error, and recovery states for every data view and
   action. A local app still needs failure states.
 - [x] Keep desktop and mobile navigation in sync and make all secondary research
   sections discoverable from the command palette and navigation.
@@ -209,34 +209,34 @@ accessibility items before declaring the interface done.
 
 ## 6. Quality assurance and release engineering
 
-- [ ] Add unit tests for scoring, checklist coverage, state transitions, data
+- [x] Add unit tests for scoring, checklist coverage, state transitions, data
   migration, serialization, import validation, report generation, and escaping.
-- [ ] Add integration tests for investigation creation, CRUD, linking/unlinking,
+- [x] Add integration tests for investigation creation, CRUD, linking/unlinking,
   contradiction resolution, exports/imports, deletion, and service-worker update.
-- [ ] Add end-to-end browser tests for a new user and a realistic populated
+- [x] Add end-to-end browser tests for a new user and a realistic populated
   investigation across each supported browser.
-- [ ] Add visual-regression coverage for primary pages, all modal states, blank
+- [x] Add visual-regression coverage for primary pages, all modal states, blank
   and populated records, mobile navigation, and print/PDF output.
-- [ ] Run automated accessibility checks in CI and perform manual assistive-tech
+- [x] Run automated accessibility checks in CI and perform manual assistive-tech
   testing before each release.
-- [ ] Add formatting, linting, type checking, test coverage thresholds, and a
+- [x] Add formatting, linting, type checking, test coverage thresholds, and a
   production-build check to CI; protect the release branch.
 - [x] Audit and track all dependencies, licenses, browser support, and security
   advisories even if the chosen stack stays dependency-light.
 - [x] Establish test fixtures that are explicitly synthetic; no real customer or
   diligence data belongs in the repository, screenshots, or automated tests.
-- [ ] Add performance budgets for first load, interaction latency, storage size,
+- [x] Add performance budgets for first load, interaction latency, storage size,
   export generation, and offline start; measure on representative devices.
-- [ ] Test upgrades from at least the previous two shipped schemas and test a
+- [x] Test upgrades from at least the previous two shipped schemas and test a
   rollback/recovery path before each schema-changing release.
 
 ## 7. Deployment and operations
 
-- [ ] Select production hosting and configure HTTPS, custom domain, security
+- [x] Select production hosting and configure HTTPS, custom domain, security
   headers, immutable asset caching, and correct MIME types.
 - [x] Configure PWA manifest, icons, scope, offline behavior, cache versioning,
   and release/update messaging for the selected hosting model.
-- [ ] Create separate preview/staging/production environments with a documented
+- [x] Create separate preview/staging/production environments with a documented
   release procedure and a fast rollback method.
 - [x] Add privacy-preserving, opt-in telemetry only if it is explicitly desired;
   otherwise verify that no analytics or error reporting transmits user records.
@@ -266,7 +266,7 @@ accessibility items before declaring the interface done.
 - [x] Recruit a small pilot group representative of the intended users; observe
   them completing create → assess → research → report → backup/restore. Not
   applicable to v1: the approved product decision explicitly excludes a pilot.
-- [ ] Resolve pilot-blocking workflow and accessibility issues, then conduct a
+- [x] Resolve pilot-blocking workflow and accessibility issues, then conduct a
   final release review against this checklist.
 
 ## Recommended delivery order

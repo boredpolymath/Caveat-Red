@@ -22,6 +22,8 @@ except json.JSONDecodeError as error:
 subprocess.run([sys.executable, str(ROOT / "scripts/build.py")], check=True)
 for required in ["index.html", "app/app.js", "app/config.js", "app/domain.js", "app/storage.js", "app/styles.css", "sw.js", "manifest.webmanifest"]:
     if not (ROOT / "dist" / required).exists(): errors.append(f"Build omitted {required}")
+app_shell_bytes = sum(path.stat().st_size for path in (ROOT / "dist").rglob("*") if path.is_file())
+if app_shell_bytes > 500_000: errors.append(f"App shell is {app_shell_bytes} bytes; release budget is 500000 bytes uncompressed")
 if errors:
     print("\n".join(errors), file=sys.stderr); sys.exit(1)
-print("Static safety and release-structure checks passed.")
+print(f"Static safety and release-structure checks passed ({app_shell_bytes} byte app shell).")
