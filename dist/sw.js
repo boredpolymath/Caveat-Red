@@ -1,5 +1,5 @@
-const VERSION = 'caveat-red-v1.0.0';
-const SHELL = ['./', './index.html', './manifest.webmanifest', './app/app.js', './app/domain.js', './app/storage.js', './app/styles.css', './assets/favicon-32.png', './assets/icon-192.png', './assets/icon-512.png'];
+const VERSION = 'caveat-red-v1.0.1-ui-restore';
+const SHELL = ['./', './index.html', './manifest.webmanifest', './assets/favicon-32.png', './assets/icon-192.png', './assets/icon-512.png'];
 self.addEventListener('install', (event) => event.waitUntil(caches.open(VERSION).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting())));
 self.addEventListener('activate', (event) => event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith('caveat-red-') && key !== VERSION).map((key) => caches.delete(key)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', (event) => {

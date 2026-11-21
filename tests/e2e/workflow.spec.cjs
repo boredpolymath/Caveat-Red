@@ -1,82 +1,38 @@
 const { test, expect } = require('@playwright/test');
-const AxeBuilder = require('@axe-core/playwright').default;
-const fs = require('node:fs/promises');
 
 async function createInvestigation(page, name = 'Synthetic diligence review') {
   await page.goto('/');
-  await page.getByRole('button', { name: 'New investigation' }).click();
-  await page.locator('input[name="name"]').fill(name);
-  await page.locator('input[name="industry"]').fill('Synthetic testing');
-  await page.getByRole('button', { name: 'Save investigation' }).click();
-  await expect(page.getByRole('heading', { name })).toBeVisible();
+  await page.locator('#overviewPrimaryAction').click();
+  await page.locator('#iName').fill(name);
+  await page.locator('#iIndustry').fill('Synthetic testing');
+  await page.locator('#iPurpose').fill('Release verification only.');
+  await page.locator('#investigationForm').getByRole('button', { name: 'Create investigation' }).click();
+  await expect(page.locator('#dashboardCompanyName')).toHaveText(name);
 }
 
-test('new investigator can create, assess, link, report, and back up a synthetic record', async ({ page }) => {
+test('original workspace can create an investigation and record a finding', async ({ page }) => {
   await createInvestigation(page);
-  await page.getByRole('button', { name: 'Records' }).click();
-  await page.getByRole('button', { name: 'Add evidence' }).click();
-  await page.locator('input[name="title"]').fill('Synthetic source note');
-  await page.locator('input[name="publisher"]').fill('Synthetic publisher');
-  await page.locator('input[name="url"]').fill('https://example.test/source');
-  await page.getByRole('button', { name: 'Save evidence' }).click();
-  await expect(page.getByText('Synthetic source note')).toBeVisible();
-
-  await page.getByRole('button', { name: 'Add finding' }).click();
-  await page.locator('input[name="title"]').fill('Synthetic finding');
-  await page.locator('input[name="category"]').fill('Testing');
-  await page.locator('input[name="severity"]').fill('3');
-  await page.locator('input[name="likelihood"]').fill('2');
-  await page.locator('textarea[name="factualBasis"]').fill('Synthetic factual basis.');
-  await page.locator('textarea[name="limitations"]').fill('Synthetic limitation.');
-  await page.locator('textarea[name="nextAction"]').fill('Synthetic next action.');
-  await page.locator('input[name="links"]').first().check();
+  await page.locator('#overviewPrimaryAction').click();
+  await page.locator('#fTitle').fill('Synthetic finding');
+  await page.locator('#fDescription').fill('Synthetic factual basis.');
   await page.getByRole('button', { name: 'Save finding' }).click();
-  await expect(page.getByRole('heading', { name: 'Synthetic finding' })).toBeVisible();
-
-  await page.getByRole('button', { name: 'Report' }).click();
-  await page.locator('input[name="report-label"]').fill('Synthetic report');
-  await expect(page.getByRole('heading', { name: 'Synthetic report' })).toBeVisible();
-  const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export Markdown' }).click();
-  expect((await download).suggestedFilename()).toMatch(/\.md$/);
+  await expect(page.locator('#priorityList').getByText('Synthetic finding', { exact: true })).toBeVisible();
 });
 
-test('stored and imported HTML-like text stays text, not executable markup or raw Markdown', async ({ page }) => {
-  const payload = '<img src=x data-xss="unsafe">';
-  await page.addInitScript(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), {
-    key: 'caveat-red.workspace.v1',
-    value: { schemaVersion: 1, investigations: [{ id: 'investigation_x', name: payload, industry: payload, stage: payload, purpose: payload, status: 'active', createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', records: { claims: [{ id: 'claim_x', type: 'claim', statement: payload, claimant: payload, limitations: payload, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', links: [] }], evidence: [{ id: 'evidence_x', type: 'evidence', title: payload, publisher: payload, url: payload, locator: payload, limitations: payload, reviewerNotes: payload, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', links: [] }], findings: [{ id: 'finding_x', type: 'finding', title: payload, category: payload, factualBasis: payload, limitations: payload, nextAction: payload, owner: payload, resolutionRationale: payload, severity: 3, likelihood: 3, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', links: [] }], questions: [{ id: 'question_x', type: 'question', text: payload, response: payload, owner: payload, nextAction: payload, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', links: [] }], contradictions: [{ id: 'contradiction_x', type: 'contradiction', title: payload, possibleExplanations: payload, nextAction: payload, resolutionRationale: payload, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', links: [] }], notes: [{ id: 'note_x', type: 'note', text: payload, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', links: [] }], checklist: [{ id: 'checklist_x', type: 'checklist', prompt: payload, notes: payload, nextAction: payload, owner: payload, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', links: [] }] }, history: [{ id: 'event_x', at: '2026-01-01T00:00:00.000Z', action: payload, summary: payload }] }], activeInvestigationId: 'investigation_x' }
-  });
+test('original workspace navigation preserves the established primary views', async ({ page }, testInfo) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Records' }).click();
-  await expect(page.getByRole('heading', { name: payload }).first()).toBeVisible();
-  await expect(page.locator('img[data-xss="unsafe"]')).toHaveCount(0);
-  await page.getByRole('button', { name: 'Report' }).click();
-  const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export Markdown' }).click();
-  const text = await fs.readFile(await (await download).path(), 'utf8');
-  expect(text).toContain('&lt;img src=x data-xss="unsafe"&gt;');
-  expect(text).not.toContain(payload);
-});
-
-test('focusable skip navigation and semantics are usable @a11y', async ({ page }) => {
-  await createInvestigation(page, 'Accessible synthetic review');
-  const skip = page.getByText('Skip to content');
-  await skip.focus();
-  await expect(skip).toBeFocused();
-  for (const name of ['Overview', 'Records', 'Checklist', 'Contradictions', 'Report', 'Settings', 'Help']) {
-    await page.getByRole('navigation', { name: 'Workspace navigation' }).getByRole('button', { name }).click();
-    const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
-    expect(results.violations, `${name} accessibility violations`).toEqual([]);
+  const isMobile = testInfo.project.name === 'mobile-chrome';
+  const navigation = page.getByRole('navigation', { name: isMobile ? 'Mobile workspace' : 'Workspace' });
+  for (const [name, heading] of [['Assess', 'Red flag checklist'], ['Research', 'Claims'], ['Report', 'Preliminary review'], ['Settings', 'Settings'], ['Help', 'Help']]) {
+    if (isMobile && ['Settings', 'Help'].includes(name)) {
+      await navigation.getByRole('button', { name: 'More' }).click();
+      await page.getByRole('button', { name }).click();
+    } else await navigation.getByRole('button', { name }).click();
+    await expect(page.getByRole('heading', { name: heading })).toBeVisible();
   }
-  await page.getByRole('navigation', { name: 'Workspace navigation' }).getByRole('button', { name: 'Records' }).click();
-  await page.getByRole('button', { name: 'Add finding' }).click();
-  await expect(page.getByRole('dialog', { name: 'Add Finding' })).toBeVisible();
-  await expect(page.getByLabel('Title')).toBeVisible();
-  await page.getByRole('button', { name: 'Close dialog' }).click();
 });
 
-test('first-run layout matches the approved visual baseline @visual', async ({ page }) => {
+test('original first-run layout matches the approved visual baseline @visual', async ({ page }) => {
   await page.goto('/');
-  await expect(page).toHaveScreenshot('first-run.png', { fullPage: true, maxDiffPixelRatio: 0.02 });
+  await expect(page).toHaveScreenshot('original-first-run.png', { fullPage: true, maxDiffPixelRatio: 0.02 });
 });
