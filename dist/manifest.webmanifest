@@ -1,11 +1,12 @@
 {
   "name": "Caveat Red",
   "short_name": "Caveat Red",
-  "description": "A local-first due diligence workspace.",
+  "description": "A local-first due-diligence workspace.",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#fbf5f0",
-  "theme_color": "#bf3b3b",
+  "background_color": "#ffffff",
+  "theme_color": "#b42318",
   "icons": [
     {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png"},
     {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png"}
