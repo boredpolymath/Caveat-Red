@@ -1,3 +1,5 @@
+import { SCORE_BANDS } from './config.js';
+
 export const APP_VERSION = '1.0.0';
 export const SCHEMA_VERSION = 1;
 export const STORAGE_KEY = 'caveat-red.workspace.v1';
@@ -99,7 +101,7 @@ export function saveWorkspace(workspace) {
 export function activeInvestigation(workspace) { return workspace.investigations.find((item) => item.id === workspace.activeInvestigationId) || null; }
 export function addEvent(investigation, action, summary) { investigation.history.unshift({ id: newId('event'), at: now(), action, summary }); investigation.updatedAt = now(); }
 export function score(finding) { return Number(finding.severity || 0) * Number(finding.likelihood || 0); }
-export function band(finding) { const value = score(finding); return value >= 16 ? 'High' : value >= 10 ? 'Elevated' : value >= 5 ? 'Moderate' : 'Low'; }
+export function band(finding) { const value = score(finding); return SCORE_BANDS.find((item) => value >= item.min).name; }
 export function checklistCoverage(investigation) {
   const answers = investigation.records.checklist;
   const assessed = answers.filter((item) => ['Concern', 'No concern', 'Not applicable'].includes(item.status)).length;

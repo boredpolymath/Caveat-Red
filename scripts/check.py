@@ -20,7 +20,7 @@ try:
 except json.JSONDecodeError as error:
     errors.append(f"Invalid manifest JSON: {error}")
 subprocess.run([sys.executable, str(ROOT / "scripts/build.py")], check=True)
-for required in ["index.html", "app/app.js", "app/domain.js", "app/storage.js", "app/styles.css", "sw.js", "manifest.webmanifest"]:
+for required in ["index.html", "app/app.js", "app/config.js", "app/domain.js", "app/storage.js", "app/styles.css", "sw.js", "manifest.webmanifest"]:
     if not (ROOT / "dist" / required).exists(): errors.append(f"Build omitted {required}")
 if errors:
     print("\n".join(errors), file=sys.stderr); sys.exit(1)

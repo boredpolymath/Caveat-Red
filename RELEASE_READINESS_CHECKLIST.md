@@ -67,7 +67,7 @@ The release blockers are product completeness and operational rigor:
   immutable event/history entries for auditable changes.
 - [x] Separate sample/demo data from production user data. Loading a sample must
   never alter a working investigation unexpectedly.
-- [ ] Centralize configuration, copy, scoring, report templates, and checklist
+- [x] Centralize configuration, copy, scoring, report templates, and checklist
   questions so they can be reviewed and versioned independently.
 - [x] Add an error boundary and clear recovery paths for corrupt data, full
   storage, unsupported browsers, failed export, and service-worker failure.
@@ -78,7 +78,7 @@ The release blockers are product completeness and operational rigor:
 
 - [x] Create, rename, archive, restore, duplicate, and permanently delete an
   investigation with clear state and confirmation behavior.
-- [ ] Add search, sort, and filters across investigations and records; preserve
+- [x] Add search, sort, and filters across investigations and records; preserve
   a user’s current view and filters where appropriate.
 - [x] Replace hard-coded dashboard next actions with actions derived from open
   findings, unanswered questions, incomplete checklist items, and due dates.
@@ -88,15 +88,15 @@ The release blockers are product completeness and operational rigor:
 
 ### Findings and checklist
 
-- [ ] Make score methodology explicit and configurable: priority bands,
+- [x] Make score methodology explicit and configurable: priority bands,
   severity, likelihood, evidence confidence, and rationale.
 - [x] Require or strongly prompt for a factual basis, known limitations, and
   next action when a finding is recorded.
 - [x] Add status transitions, a resolution rationale, resolution date, and the
   evidence used to resolve a finding.
-- [ ] Enable filtering and sorting by status, category, score, confidence,
+- [x] Enable filtering and sorting by status, category, score, confidence,
   linked records, and date; provide saved/repeatable views if warranted.
-- [ ] Allow checklist responses to include notes, evidence links, owner, and
+- [x] Allow checklist responses to include notes, evidence links, owner, and
   next action rather than only four status buttons.
 - [x] Define whether unanswered, unknown, and not-applicable checklist answers
   affect coverage and report readiness; implement that rule consistently.
@@ -132,7 +132,7 @@ The release blockers are product completeness and operational rigor:
 - [x] Define a report specification and a field-inclusion policy. It should
   distinguish facts/citations, findings, confidence, limitations, unanswered
   questions, contradictions, methodology, and a non-advisory disclaimer.
-- [ ] Add a report preview that lets a user select included items and order,
+- [x] Add a report preview that lets a user select included items and order,
   label, and explain them before export.
 - [x] Include stable identifiers, generated timestamp/timezone, application and
   schema version, and source/citation locators in exports.
@@ -143,7 +143,7 @@ The release blockers are product completeness and operational rigor:
 - [x] Ensure reports never describe a source as verified, a claim as false, or a
   concern as wrongdoing unless the stored status and user-authored rationale
   support that language.
-- [ ] Implement versioned JSON import with preflight validation, a human-readable
+- [x] Implement versioned JSON import with preflight validation, a human-readable
   import summary, duplicate handling, and a non-destructive rollback path.
 - [x] Provide “export all investigations” and a documented backup/restore flow.
 - [x] Add a data-health screen: storage usage, schema version, last backup,
@@ -240,7 +240,7 @@ accessibility items before declaring the interface done.
   release procedure and a fast rollback method.
 - [x] Add privacy-preserving, opt-in telemetry only if it is explicitly desired;
   otherwise verify that no analytics or error reporting transmits user records.
-- [ ] Decide how client-side errors will be supported without collecting
+- [x] Decide how client-side errors will be supported without collecting
   investigation contents; provide a user-controlled diagnostic export if needed.
 - [x] Set a release version and changelog; show the version in Help/Settings and
   include it in exports.

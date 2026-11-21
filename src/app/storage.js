@@ -1,5 +1,7 @@
 import { APP_VERSION, SCHEMA_VERSION, STORAGE_KEY, validateWorkspace } from './domain.js';
 
+export const IMPORT_ROLLBACK_KEY = `${STORAGE_KEY}.pre-import-backup`;
+
 export function storageHealth() {
   const value = localStorage.getItem(STORAGE_KEY) || '';
   let used = new Blob([value]).size;
@@ -19,12 +21,16 @@ export function mergeImport(current, incoming, onDuplicate = 'keep-both') {
   const copy = (value) => typeof structuredClone === 'function' ? structuredClone(value) : JSON.parse(JSON.stringify(value));
   const result = copy(current);
   const existing = new Set(result.investigations.map((item) => item.id));
-  const summary = { imported: 0, skipped: 0, renamed: 0 };
+  const summary = { imported: 0, skipped: 0, renamed: 0, records: 0 };
   incoming.investigations.forEach((investigation) => {
     if (existing.has(investigation.id) && onDuplicate === 'skip') { summary.skipped += 1; return; }
     const item = copy(investigation);
     if (existing.has(item.id)) { item.id = `${item.id}-imported-${Date.now()}`; item.name = `${item.name} (imported)`; summary.renamed += 1; }
-    result.investigations.push(item); existing.add(item.id); summary.imported += 1;
+    result.investigations.push(item); existing.add(item.id); summary.imported += 1; summary.records += Object.values(item.records).flat().length;
   });
   return { workspace: validateWorkspace(result), summary };
 }
+
+export function saveImportRollback(workspace) { localStorage.setItem(IMPORT_ROLLBACK_KEY, JSON.stringify(validateWorkspace(workspace))); }
+export function loadImportRollback() { const raw = localStorage.getItem(IMPORT_ROLLBACK_KEY); return raw ? validateWorkspace(JSON.parse(raw)) : null; }
+export function clearImportRollback() { localStorage.removeItem(IMPORT_ROLLBACK_KEY); }
