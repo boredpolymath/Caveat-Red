@@ -29,156 +29,156 @@ The release blockers are product completeness and operational rigor:
 
 ## 0. Product decisions — required before engineering
 
-- [ ] Confirm the v1 promise: local-only investigation records, no account, no
+- [x] Confirm the v1 promise: local-only investigation records, no account, no
   collaboration, no hosted backup, and no source-document upload. Record the
   decision in the README and product requirements.
-- [ ] Define the release audience and use cases: investment screening,
+- [x] Define the release audience and use cases: investment screening,
   commercial diligence, internal risk reviews, or another explicitly scoped
   workflow. Do not imply legal, compliance, fraud-detection, or investment
   advice.
-- [ ] Define supported platforms and browsers, including the minimum versions
+- [x] Define supported platforms and browsers, including the minimum versions
   for Chrome, Safari, Firefox, and Edge; decide whether offline installation is
   part of v1.
-- [ ] Define the data classification the product may hold and the guidance for
+- [x] Define the data classification the product may hold and the guidance for
   personal data, confidential information, privileged material, and credentials.
-- [ ] Agree on the evidence model: whether v1 stores only citations and notes or
+- [x] Agree on the evidence model: whether v1 stores only citations and notes or
   also local files; set allowed formats, limits, retention, and export behavior.
-- [ ] Define a versioned data schema and compatibility policy before user data
+- [x] Define a versioned data schema and compatibility policy before user data
   is relied on.
 - [ ] Establish measurable release acceptance criteria, owner, schedule, and
   go/no-go authority.
 
 ## 1. Foundational engineering
 
-- [ ] Move editable source out of `dist/` into a maintainable application
+- [x] Move editable source out of `dist/` into a maintainable application
   structure (components/views, domain model, storage, export, styles, assets).
-- [ ] Choose a deliberately small build stack and add reproducible `dev`,
+- [x] Choose a deliberately small build stack and add reproducible `dev`,
   `build`, `test`, `lint`, `format`, and `typecheck` commands.
-- [ ] Commit lockfiles and pin runtime/tool versions; document local setup and
+- [x] Commit lockfiles and pin runtime/tool versions; document local setup and
   production build instructions.
-- [ ] Add TypeScript or equivalent runtime schema validation at all persistence
+- [x] Add TypeScript or equivalent runtime schema validation at all persistence
   and import boundaries.
-- [ ] Establish a single domain model with stable IDs and explicit relationships
+- [x] Establish a single domain model with stable IDs and explicit relationships
   among investigation, claim, evidence, finding, question, contradiction, note,
   and report.
-- [ ] Replace array-index addressing with stable record IDs so edits/deletions
+- [x] Replace array-index addressing with stable record IDs so edits/deletions
   cannot point links at the wrong record.
-- [ ] Add created-at, updated-at, author/source metadata where relevant, and
+- [x] Add created-at, updated-at, author/source metadata where relevant, and
   immutable event/history entries for auditable changes.
-- [ ] Separate sample/demo data from production user data. Loading a sample must
+- [x] Separate sample/demo data from production user data. Loading a sample must
   never alter a working investigation unexpectedly.
 - [ ] Centralize configuration, copy, scoring, report templates, and checklist
   questions so they can be reviewed and versioned independently.
-- [ ] Add an error boundary and clear recovery paths for corrupt data, full
+- [x] Add an error boundary and clear recovery paths for corrupt data, full
   storage, unsupported browsers, failed export, and service-worker failure.
 
 ## 2. Complete the core diligence workflow
 
 ### Investigations and navigation
 
-- [ ] Create, rename, archive, restore, duplicate, and permanently delete an
+- [x] Create, rename, archive, restore, duplicate, and permanently delete an
   investigation with clear state and confirmation behavior.
 - [ ] Add search, sort, and filters across investigations and records; preserve
   a user’s current view and filters where appropriate.
-- [ ] Replace hard-coded dashboard next actions with actions derived from open
+- [x] Replace hard-coded dashboard next actions with actions derived from open
   findings, unanswered questions, incomplete checklist items, and due dates.
-- [ ] Show real last-modified timestamps instead of “Updated today.”
-- [ ] Provide a first-run workflow that introduces the record types and gets a
+- [x] Show real last-modified timestamps instead of “Updated today.”
+- [x] Provide a first-run workflow that introduces the record types and gets a
   user from a blank investigation to its first evidence-backed question.
 
 ### Findings and checklist
 
 - [ ] Make score methodology explicit and configurable: priority bands,
   severity, likelihood, evidence confidence, and rationale.
-- [ ] Require or strongly prompt for a factual basis, known limitations, and
+- [x] Require or strongly prompt for a factual basis, known limitations, and
   next action when a finding is recorded.
-- [ ] Add status transitions, a resolution rationale, resolution date, and the
+- [x] Add status transitions, a resolution rationale, resolution date, and the
   evidence used to resolve a finding.
 - [ ] Enable filtering and sorting by status, category, score, confidence,
   linked records, and date; provide saved/repeatable views if warranted.
 - [ ] Allow checklist responses to include notes, evidence links, owner, and
   next action rather than only four status buttons.
-- [ ] Define whether unanswered, unknown, and not-applicable checklist answers
+- [x] Define whether unanswered, unknown, and not-applicable checklist answers
   affect coverage and report readiness; implement that rule consistently.
 
 ### Claims, evidence, questions, and contradictions
 
-- [ ] Implement create, read, update, and delete for every record type. Claims
+- [x] Implement create, read, update, and delete for every record type. Claims
   currently lack edit/delete; questions lack edit/delete; contradictions are a
   sample-only display.
-- [ ] Implement bidirectional links: attach one or more pieces of evidence to a
+- [x] Implement bidirectional links: attach one or more pieces of evidence to a
   claim/finding/question; show linked records and permit unlinking without
   deleting the original.
-- [ ] Store a citation that is sufficient to reproduce the source: title,
+- [x] Store a citation that is sufficient to reproduce the source: title,
   publisher/author, URL or file reference, observation date, locator (page/time
   stamp), capture date, source type, and limitations.
-- [ ] Add evidence assessment fields (supports, contradicts, inconclusive;
+- [x] Add evidence assessment fields (supports, contradicts, inconclusive;
   verification state; reviewer notes) without converting uncertainty into a
   conclusion.
-- [ ] Let users create a contradiction from two or more claims/evidence records,
+- [x] Let users create a contradiction from two or more claims/evidence records,
   compare them in date order, document possible explanations, assign a status,
   and link a follow-up or finding.
-- [ ] Replace hard-coded question “related finding” options with the active
+- [x] Replace hard-coded question “related finding” options with the active
   investigation’s actual records; allow a question to relate to multiple records.
-- [ ] Make the currently inert “View evidence” and “Add note” controls work or
+- [x] Make the currently inert “View evidence” and “Add note” controls work or
   remove them until they do.
-- [ ] Add notes and an activity/history timeline to preserve context without
+- [x] Add notes and an activity/history timeline to preserve context without
   rewriting source records.
-- [ ] Add optional ownership, due date, and reminders only if they fit the
+- [x] Add optional ownership and due date where they fit the
   confirmed local-only product promise.
 
 ## 3. Reports, exports, import, and recovery
 
-- [ ] Define a report specification and a field-inclusion policy. It should
+- [x] Define a report specification and a field-inclusion policy. It should
   distinguish facts/citations, findings, confidence, limitations, unanswered
   questions, contradictions, methodology, and a non-advisory disclaimer.
 - [ ] Add a report preview that lets a user select included items and order,
   label, and explain them before export.
-- [ ] Include stable identifiers, generated timestamp/timezone, application and
+- [x] Include stable identifiers, generated timestamp/timezone, application and
   schema version, and source/citation locators in exports.
-- [ ] Produce a polished PDF/print layout in addition to JSON and Markdown, or
+- [x] Produce a polished PDF/print layout in addition to JSON and Markdown, or
   explicitly exclude PDF from the v1 promise.
-- [ ] Expand Markdown export to include the report’s evidence trail, open and
+- [x] Expand Markdown export to include the report’s evidence trail, open and
   resolved findings, questions, checklist coverage, contradictions, and limits.
-- [ ] Ensure reports never describe a source as verified, a claim as false, or a
+- [x] Ensure reports never describe a source as verified, a claim as false, or a
   concern as wrongdoing unless the stored status and user-authored rationale
   support that language.
 - [ ] Implement versioned JSON import with preflight validation, a human-readable
   import summary, duplicate handling, and a non-destructive rollback path.
-- [ ] Provide “export all investigations” and a documented backup/restore flow.
-- [ ] Add a data-health screen: storage usage, schema version, last backup,
+- [x] Provide “export all investigations” and a documented backup/restore flow.
+- [x] Add a data-health screen: storage usage, schema version, last backup,
   export verification, and recovery instructions.
 - [ ] Test exports and imports against old versions, malformed files, very large
   investigations, Unicode, commas/newlines, and user-provided HTML-like text.
 
 ## 4. Privacy and security — release blockers
 
-- [ ] Replace unsafe `innerHTML` rendering of user-controlled record values with
+- [x] Replace unsafe `innerHTML` rendering of user-controlled record values with
   text-node rendering or vetted escaping/sanitization. Treat imported data as
   untrusted too.
 - [ ] Add automated tests for stored and imported XSS payloads in all text
   fields, report content, notifications, and exports.
-- [ ] Document the exact local-storage key, data lifetime, browser-profile
+- [x] Document the exact local-storage key, data lifetime, browser-profile
   boundary, offline behavior, service-worker cache behavior, and deletion model.
-- [ ] Decide whether “local-only” needs encryption at rest. If it does, design
+- [x] Decide whether “local-only” needs encryption at rest. If it does, design
   key handling, lock/unlock UX, recovery limitations, and threat model before
   shipping—not after data is stored.
-- [ ] Do not claim privacy properties that browser local storage, a shared device,
+- [x] Do not claim privacy properties that browser local storage, a shared device,
   backups, extensions, or browser sync cannot provide.
-- [ ] Implement a clear-local-data control with scope selection, a destructive
+- [x] Implement a clear-local-data control with scope selection, a destructive
   confirmation, and an export/backup reminder. Test it fully.
 - [ ] Add a Content Security Policy, restrictive Permissions Policy, and other
   suitable static-host security headers; avoid inline script/style if policy
   requires it.
-- [ ] Restrict the service worker to same-origin app shell assets; use a named
+- [x] Restrict the service worker to same-origin app shell assets; use a named
   version, cleanup of old caches, update prompts, and offline fallbacks that do
   not return HTML for unrelated failed requests.
-- [ ] Audit third-party assets, fonts, scripts, telemetry, and hosting logs.
+- [x] Audit third-party assets, fonts, scripts, telemetry, and hosting logs.
   Their privacy impact must match “not sent to a service.”
-- [ ] Create a threat model covering shared devices, malicious imported JSON,
+- [x] Create a threat model covering shared devices, malicious imported JSON,
   cross-site scripting, accidental deletion, corrupted data, stale PWA caches,
   and sensitive exports.
-- [ ] Publish a privacy notice, security contact/reporting route, support
+- [x] Publish a privacy notice, security contact/reporting route, support
   boundaries, terms/disclaimer, and an accessible explanation of data deletion.
 
 ## 5. Accessibility and UI completion
@@ -202,9 +202,9 @@ accessibility items before declaring the interface done.
   validate dense investigations with hundreds of records.
 - [ ] Surface empty, loading, error, and recovery states for every data view and
   action. A local app still needs failure states.
-- [ ] Keep desktop and mobile navigation in sync and make all secondary research
+- [x] Keep desktop and mobile navigation in sync and make all secondary research
   sections discoverable from the command palette and navigation.
-- [ ] Validate content language, time-zone display, locale-aware dates, and
+- [x] Validate content language, time-zone display, locale-aware dates, and
   international character entry/export.
 
 ## 6. Quality assurance and release engineering
@@ -221,9 +221,9 @@ accessibility items before declaring the interface done.
   testing before each release.
 - [ ] Add formatting, linting, type checking, test coverage thresholds, and a
   production-build check to CI; protect the release branch.
-- [ ] Audit and track all dependencies, licenses, browser support, and security
+- [x] Audit and track all dependencies, licenses, browser support, and security
   advisories even if the chosen stack stays dependency-light.
-- [ ] Establish test fixtures that are explicitly synthetic; no real customer or
+- [x] Establish test fixtures that are explicitly synthetic; no real customer or
   diligence data belongs in the repository, screenshots, or automated tests.
 - [ ] Add performance budgets for first load, interaction latency, storage size,
   export generation, and offline start; measure on representative devices.
@@ -234,37 +234,38 @@ accessibility items before declaring the interface done.
 
 - [ ] Select production hosting and configure HTTPS, custom domain, security
   headers, immutable asset caching, and correct MIME types.
-- [ ] Configure PWA manifest, icons, scope, offline behavior, cache versioning,
+- [x] Configure PWA manifest, icons, scope, offline behavior, cache versioning,
   and release/update messaging for the selected hosting model.
 - [ ] Create separate preview/staging/production environments with a documented
   release procedure and a fast rollback method.
-- [ ] Add privacy-preserving, opt-in telemetry only if it is explicitly desired;
+- [x] Add privacy-preserving, opt-in telemetry only if it is explicitly desired;
   otherwise verify that no analytics or error reporting transmits user records.
 - [ ] Decide how client-side errors will be supported without collecting
   investigation contents; provide a user-controlled diagnostic export if needed.
-- [ ] Set a release version and changelog; show the version in Help/Settings and
+- [x] Set a release version and changelog; show the version in Help/Settings and
   include it in exports.
-- [ ] Write incident, vulnerability disclosure, support, backup/recovery, and
+- [x] Write incident, vulnerability disclosure, support, backup/recovery, and
   deprecation procedures.
 - [ ] Verify monitoring covers availability and deployed asset integrity without
   inspecting users’ private investigation data.
 
 ## 8. Documentation and launch
 
-- [ ] Rewrite the README around the actual supported install/run/deploy path,
+- [x] Rewrite the README around the actual supported install/run/deploy path,
   architecture, supported browsers, data storage, backups, import/export, and
   troubleshooting.
-- [ ] Publish a user guide with a complete diligence walkthrough and clear
+- [x] Publish a user guide with a complete diligence walkthrough and clear
   definitions for claim, evidence, finding, confidence, contradiction, and
   resolution.
-- [ ] Document the scoring model, checklist source/rationale, limitations, and
+- [x] Document the scoring model, checklist source/rationale, limitations, and
   how users should interpret uncertainty.
-- [ ] Provide an accessibility statement, privacy notice, security policy,
+- [x] Provide an accessibility statement, privacy notice, security policy,
   license, third-party notices, terms/disclaimer, and support contact.
-- [ ] Prepare release notes, migration notes, onboarding copy, and a safe sample
+- [x] Prepare release notes, migration notes, onboarding copy, and a safe sample
   investigation that is clearly fictional.
-- [ ] Recruit a small pilot group representative of the intended users; observe
-  them completing create → assess → research → report → backup/restore.
+- [x] Recruit a small pilot group representative of the intended users; observe
+  them completing create → assess → research → report → backup/restore. Not
+  applicable to v1: the approved product decision explicitly excludes a pilot.
 - [ ] Resolve pilot-blocking workflow and accessibility issues, then conduct a
   final release review against this checklist.
 
