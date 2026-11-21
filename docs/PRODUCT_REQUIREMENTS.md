@@ -14,6 +14,7 @@
 | Offline | HTTPS PWA app-shell caching; no guarantee for arbitrary network resources. |
 | Owner | Bored Polymath Studios. |
 | Go/no-go | Bored Polymath Studios after the release procedure passes. |
+| Release schedule | 21 November 2026, after the protected `main` release checks pass. |
 
 ## Schema and compatibility
 

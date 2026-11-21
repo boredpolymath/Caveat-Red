@@ -14,14 +14,22 @@ Do not store credentials, highly sensitive personal data, or privileged material
 
 ## Run locally
 
-Requires Python 3.9+ only. There are no third-party runtime dependencies.
+Running the app requires Python 3.9+ only. Full QA also requires Node 24.21.0 and the committed npm lockfile; there are no third-party runtime dependencies.
 
 ```sh
 make build
 make dev
 ```
 
-Open <http://localhost:8000>. `make test`, `make lint`, `make typecheck`, and `make check` run the reproducible source and release-structure checks. `make format` checks Python support scripts compile. The app’s runtime boundary validates stored and imported data against a versioned schema.
+For the complete quality suite:
+
+```sh
+npm ci
+npx playwright install chromium firefox webkit
+npm test
+```
+
+Open <http://localhost:8000>. `make test`, `make lint`, `make typecheck`, and `make check` run the reproducible source and release-structure checks. `npm test` runs unit, end-to-end, stored-XSS, automated accessibility, and visual-regression checks. The app’s runtime boundary validates stored and imported data against a versioned schema.
 
 ## Architecture
 

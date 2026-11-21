@@ -45,7 +45,7 @@ The release blockers are product completeness and operational rigor:
   also local files; set allowed formats, limits, retention, and export behavior.
 - [x] Define a versioned data schema and compatibility policy before user data
   is relied on.
-- [ ] Establish measurable release acceptance criteria, owner, schedule, and
+- [x] Establish measurable release acceptance criteria, owner, schedule, and
   go/no-go authority.
 
 ## 1. Foundational engineering
@@ -246,7 +246,7 @@ accessibility items before declaring the interface done.
   include it in exports.
 - [x] Write incident, vulnerability disclosure, support, backup/recovery, and
   deprecation procedures.
-- [ ] Verify monitoring covers availability and deployed asset integrity without
+- [x] Verify monitoring covers availability and deployed asset integrity without
   inspecting users’ private investigation data.
 
 ## 8. Documentation and launch
